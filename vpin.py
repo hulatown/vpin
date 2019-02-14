@@ -4,7 +4,7 @@ from numpy import float32
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-BUCKET_VOLUME_SIZE = 84  # to be tweated
+BUCKET_VOLUME_SIZE = 844  # to be tweated
 WINDOWS_LENGTH = 50  # to be tweated
 
 sum_v_tau_b_minus_s = 0
@@ -39,6 +39,9 @@ v_tau_b = 0
 v_tau_s = 0
 todo_volume = 0
 
+data_num = len(all_trades)
+data_i = 0
+
 for trade in all_trades.itertuples():
     todo_volume = getattr(trade, "amount")
     todo_timestamp = getattr(trade, "time")
@@ -64,6 +67,13 @@ for trade in all_trades.itertuples():
         v_tau_s += todo_volume
     elif getattr(trade, "buy_or_sell") == "b":
         v_tau_b += todo_volume
+    data_i += 1
+    print(
+        "Processed Data: ",
+        round(data_i / data_num * 100, 2),
+        "%",
+        sep="",
+        end="\r")
 
 # plot
 all_trades['time'] = pd.to_datetime(all_trades['time'])
