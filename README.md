@@ -12,3 +12,4 @@ Based on Python3.
 ## References:
 
 [1] LOPEZ DE PRADO M. Advances in High Frequency Strategies[R]. 2012.
+[2] https://github.com/yt-feng/VPIN
