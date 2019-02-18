@@ -3,7 +3,7 @@
 Application of VPIN in cyrptocurrency market:
 
 - Based on Python3.
-- Implementes two kinds of VPIN using different trade classification methods:
+- Implements two kinds of VPIN using different trade classification methods:
   - Tick rule
   - Bulk Volume Classification
 
