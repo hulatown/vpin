@@ -5,8 +5,8 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import math as math
 
-BUCKET_VOLUME_SIZE = 844  # to be tweated
-WINDOWS_LENGTH = 50  # to be tweated
+BUCKET_VOLUME_SIZE = 146817  # to be tweated
+WINDOWS_LENGTH = 25  # to be tweated
 
 sum_v_tau_b_minus_s = 0
 v_tau_b_mius_s = [
@@ -47,7 +47,7 @@ def new_bucket(buy_volume, sell_volume, bucket_time):
 
 
 all_trades = pd.read_csv(
-    './BTCUSDT/binance_20180801.csv', index_col='time', parse_dates=True)
+    './EOSUSDT/BINANCE_EOSUSDT_201901.csv', index_col='time', parse_dates=True)
 
 resampled_trades = all_trades.resample('1min').agg({
     'price': 'ohlc',
@@ -92,6 +92,10 @@ for trade in resampled_trades.iterrows():
         sep="",
         end="\r")
 
+vpin_df_len = len(vpin_df)
+vpin_df['cdf_vpin'] = vpin_df['vpin'].map(lambda x: len(vpin_df[x >= vpin_df[
+    'vpin']]) / vpin_df_len)
+
 # plot
 vpin_df['bucket_time'] = pd.to_datetime(vpin_df['bucket_time'])
 vpin_df.set_index('bucket_time')
@@ -100,5 +104,7 @@ fig, ax1 = plt.subplots()
 ax2 = ax1.twinx()
 
 ax1.plot(all_trades['price'], 'b-')
-ax2.plot(vpin_df['bucket_time'], vpin_df['vpin'], 'g-')
+ax2.plot(vpin_df['bucket_time'], vpin_df['vpin'], 'g+--')
+ax2.plot(vpin_df['bucket_time'], vpin_df['cdf_vpin'], 'r*--')
 plt.show()
+pass
